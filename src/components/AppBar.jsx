@@ -6,14 +6,14 @@ import theme from '../theme';
 const AppTabAction = ({ children, ...props }) => {
   return (
     <Pressable {...props}>
-    <Text style={{ color: 'white'}} fontWeight='bold' fontSize='subheading'>{children}</Text>
-  </Pressable>
+      <Text style={{ color: 'white'}} fontWeight='bold' fontSize='subheading'>{children}</Text>
+    </Pressable>
   )
 }
 
 const appTabStyles = StyleSheet.create({
   tab: {
-    // flexDirection: 'column-reverse',
+    flexDirection: 'column-reverse',
     paddingLeft: 10,
     paddingTop: 60,
   }

@@ -1,6 +1,5 @@
 // import Constants from 'expo-components'
-import Constants from 'expo-constants'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import RepositoryList from './RepositoryList'
 import AppBar from './AppBar'
 
