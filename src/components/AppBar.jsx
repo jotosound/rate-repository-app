@@ -2,18 +2,20 @@ import { Pressable, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
 import theme from '../theme';
+import { Link } from 'react-router-native';
 
-const AppTabAction = ({ children, ...props }) => {
+const AppTabAction = ({ children, to }) => {
   return (
-    <Pressable {...props}>
-      <Text style={{ color: 'white'}} fontWeight='bold' fontSize='subheading'>{children}</Text>
-    </Pressable>
+    <Link to={to}>
+      <Text style={{ color: 'white', padding: 5,}} fontWeight='bold' fontSize='subheading'>{children}</Text>
+    </Link>
   )
 }
 
 const appTabStyles = StyleSheet.create({
   tab: {
-    flexDirection: 'column-reverse',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     paddingLeft: 10,
     paddingTop: 60,
   }
@@ -22,7 +24,8 @@ const appTabStyles = StyleSheet.create({
 const AppTab = () => {
   return (
     <View style={appTabStyles.tab}>
-      <AppTabAction>Repositories</AppTabAction>
+      <AppTabAction to='/'>Repositories</AppTabAction>
+      <AppTabAction to='/signin'>Sign In</AppTabAction>
     </View>
   )
 }
