@@ -9,6 +9,10 @@ const headerStyles = StyleSheet.create({
   },
   item: {
     paddingBottom: 8,
+    flexDirection: 'row',
+    flexGrow: 1,
+    flexShrink: 1,
+    width: 'auto',
   },
   langChip: { 
     backgroundColor: theme.colors.primary,
