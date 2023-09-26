@@ -1,4 +1,4 @@
-import { Pressable, View, StyleSheet } from 'react-native';
+import { Pressable, View, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
 import theme from '../theme';
@@ -24,8 +24,10 @@ const appTabStyles = StyleSheet.create({
 const AppTab = () => {
   return (
     <View style={appTabStyles.tab}>
-      <AppTabAction to='/'>Repositories</AppTabAction>
-      <AppTabAction to='/signin'>Sign In</AppTabAction>
+      <ScrollView horizontal>
+        <AppTabAction to='/'>Repositories</AppTabAction>
+        <AppTabAction to='/signin'>Sign In</AppTabAction>
+      </ScrollView>
     </View>
   )
 }
