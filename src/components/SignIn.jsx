@@ -3,9 +3,11 @@ import Text from "./Text";
 import FormikTextInput from "./FormikTextInput";
 import { Formik } from "formik";
 import theme from "../theme";
-import * as yup from 'yup'
+import * as yup from "yup";
 import useSignIn from "../hooks/useSignIn";
 import { useEffect } from "react";
+import useAuthStorage from "../hooks/useAuthStorage";
+
 const initialValues = {
   username: "",
   password: "",
@@ -42,32 +44,36 @@ const SignInForm = ({ onSubmit }) => {
 const validationSchema = yup.object().shape({
   username: yup
     .string()
-    .required('Username is required'),
+    .required("Username is required"),
   password: yup
     .string()
-    .required('Password is required')
-})  
+    .required("Password is required"),
+});
 
 const SignIn = () => {
-  const [signIn, result] = useSignIn()
+  const [signIn, result] = useSignIn();
   const onSubmit = async (values) => {
-    const { username, password} = values 
+    const { username, password } = values;
 
     try {
-      signIn({username, password})
-      console.log('success')
+      await signIn({ username, password });
+      console.log("success");
     } catch (error) {
-      console.log(error) 
+      console.log(error);
     }
   };
   useEffect(() => {
     if (result.data) {
-      console.log(result.data.authenticate.accessToken)
+      console.log(result.data.authenticate.accessToken);
     }
-  }, [result])
+  }, [result]);
   return (
-    <View style={{ backgroundColor: 'white'}}>
-      <Formik validationSchema={validationSchema} initialValues={initialValues} onSubmit={onSubmit}>
+    <View style={{ backgroundColor: "white" }}>
+      <Formik
+        validationSchema={validationSchema}
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+      >
         {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
       </Formik>
     </View>
