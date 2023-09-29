@@ -1,6 +1,7 @@
-import { View, Image, StyleSheet } from "react-native"
+import { View, Image, StyleSheet, Pressable } from "react-native"
 import Text from "./Text"
 import theme from "../theme"
+import * as Linking from 'expo-linking';
 
 const headerStyles = StyleSheet.create({
   container: {
@@ -114,7 +115,28 @@ const RepositoryItem = ({ item }) => {
   return (
     <View testID="repositoryItem" style={styles.container}>
       <ItemHeader item={item} />
-      <ItemStats item={item} /> 
+      <ItemStats item={item} />
+      {item?.reviews && (
+        <Pressable
+        style={{
+          margin: 10,
+          justifyContent: "center",
+          alignItems: "center",
+          height: 60,
+          backgroundColor: theme.colors.primary,
+          borderRadius: 5,
+        }}
+        onPress={()=> Linking.openURL(item.url)} 
+      >
+        <Text
+          style={{ color: "white" }}
+          fontSize="subheading"
+          fontWeight="bold"
+        >
+         Open in Github 
+        </Text>
+      </Pressable>
+      )}
     </View>
   )
 }
