@@ -2,7 +2,7 @@ import { FlatList, View, StyleSheet, ActivityIndicator, Pressable } from 'react-
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
-
+import {Picker} from '@react-native-picker/picker';
 const styles = StyleSheet.create({
   separator: {
     height: 10,
@@ -11,7 +11,21 @@ const styles = StyleSheet.create({
 
 export const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+const FilterSelect = ({ filter, refetch }) => {
+   
+  return (
+    <Picker
+      selectedValue={filter}
+      onValueChange={(value) => refetch(value)}
+    > 
+      <Picker.Item label='Latest Reposities' value='latest'/>
+      <Picker.Item label='Highest Rated Reposities' value='best'/>
+      <Picker.Item label='Lowest Rated Reposities' value='worst'/>
+    </Picker>
+  )
+}
+
+export const RepositoryListContainer = ({ repositories, filter, refetch }) => {
   const repositoryNodes = repositories 
     ? repositories.edges?.map(edge => edge.node)
     : []
@@ -22,6 +36,7 @@ export const RepositoryListContainer = ({ repositories }) => {
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
+      ListHeaderComponent={() => <FilterSelect filter={filter} refetch={refetch}/>}
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate(`/repositories/${item.id}`)}>
           <RepositoryItem item={item} /> 
@@ -32,7 +47,7 @@ export const RepositoryListContainer = ({ repositories }) => {
 }
 
 const RepositoryList = () => {
-  const { repositories, loading } = useRepositories() 
+  const { repositories, loading, refetch, filter } = useRepositories() 
   
   if (loading) return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -40,7 +55,7 @@ const RepositoryList = () => {
     </View>
   )
   
-  return <RepositoryListContainer repositories={repositories} />
+  return <RepositoryListContainer repositories={repositories} refetch={refetch} filter={filter} />
   
 };
 
