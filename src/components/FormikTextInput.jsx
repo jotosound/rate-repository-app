@@ -32,7 +32,7 @@ const FormikTextInput = ({ name, ...props }) => {
         borderColor={showError ? styles.errorText.color : theme.colors.textSecondary}
         onChangeText={value => helpers.setValue(value)}
         onBlur={() => helpers.setTouched(true)}
-        value={field.value}
+        value={field.value ?? false}
         error={showError}
         {...props}
       />
