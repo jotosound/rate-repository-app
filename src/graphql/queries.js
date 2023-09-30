@@ -8,15 +8,7 @@ export const ME = gql`
     }
   }
 `
-export const CREATE_REVIEW = gql`
-  mutation CreateReview($review: CreateReviewInput) {
-    createReview(review: $review) {
-      repository {
-        id
-      }
-    }
-  }
-`
+
 export const GET_REPOSITORY = gql`
   query Repository($repositoryId: ID!) {
     repository(id: $repositoryId) {
