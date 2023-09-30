@@ -29,19 +29,19 @@ const appTabStyles = StyleSheet.create({
   },
 });
 
-
-
 const AppTab = () => {
- const { me } = useUser() 
-  const [signOut] = useSignOut()  
+  const { me } = useUser();
+  const [signOut] = useSignOut();
   return (
     <View style={appTabStyles.tab}>
       <ScrollView horizontal>
         <AppTabAction to="/">Repositories</AppTabAction>
-        {!me 
-        ? <AppTabAction to="/signin">Sign In</AppTabAction>
-        : <AppTabAction onPress={signOut}>Sign Out</AppTabAction>
-        }
+        {!me ? <AppTabAction to="/signin">Sign In</AppTabAction> : (
+          <>
+            <AppTabAction to="/review">Create a Review</AppTabAction>
+            <AppTabAction onPress={signOut}>Sign Out</AppTabAction>
+          </>
+        )}
       </ScrollView>
     </View>
   );

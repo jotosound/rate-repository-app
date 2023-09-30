@@ -9,8 +9,9 @@ const SingleRepository = () => {
   // ...
   const { id } = useParams()
   const { data, loading } = useQuery(GET_REPOSITORY, { 
-    variables: { repositoryId: id ? id : ''
-    } 
+    variables: { repositoryId: id ? id : ''},
+    fetchPolicy: 'cache-and-network',
+
   })
   const repository = data?.repository 
   const reviews = data?.repository?.reviews?.edges.map(x => x.node)
@@ -21,7 +22,6 @@ const SingleRepository = () => {
     </View>
     )
   
-  console.log(repository)
   return (
     <FlatList
       data={reviews}
