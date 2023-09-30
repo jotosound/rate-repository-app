@@ -10,7 +10,7 @@ const AppTabAction = ({ children, ...props }) => {
   return (
     <Link {...props}>
       <Text
-        style={{ color: "white", padding: 5 }}
+        style={{ color: "white" }}
         fontWeight="bold"
         fontSize="subheading"
       >
@@ -23,8 +23,6 @@ const AppTabAction = ({ children, ...props }) => {
 const appTabStyles = StyleSheet.create({
   tab: {
     flexDirection: "row",
-    justifyContent: "flex-start",
-    paddingLeft: 10,
     paddingTop: 60,
   },
 });
@@ -34,9 +32,14 @@ const AppTab = () => {
   const [signOut] = useSignOut();
   return (
     <View style={appTabStyles.tab}>
-      <ScrollView horizontal>
+      <ScrollView horizontal contentContainerStyle={{flex: 1, justifyContent: 'space-evenly'}}>
         <AppTabAction to="/">Repositories</AppTabAction>
-        {!me ? <AppTabAction to="/signin">Sign In</AppTabAction> : (
+        {!me ? (
+          <>
+          <AppTabAction to="/signin">Sign In</AppTabAction> 
+          <AppTabAction to="/signup">Sign Up</AppTabAction> 
+          </>
+          ) : (
           <>
             <AppTabAction to="/review">Create a Review</AppTabAction>
             <AppTabAction onPress={signOut}>Sign Out</AppTabAction>

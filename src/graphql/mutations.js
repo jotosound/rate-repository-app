@@ -17,3 +17,12 @@ mutation Login($credentials: AuthenticateInput){
   }
 }
 `
+
+export const SIGNUP = gql`
+mutation CreateUser($user: CreateUserInput) {
+  createUser(user: $user) {
+    id
+    username
+  }
+}
+`
