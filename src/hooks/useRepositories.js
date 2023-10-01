@@ -8,7 +8,7 @@ const useRepositories = () => {
     fetchPolicy: 'cache-and-network',
     // orderBy: CREATED_AT | RATING_AVERAGE
     // orderDirection: ASC | DESC 
-    variables: { orderBy: 'CREATED_AT', orderDirection: 'DESC'}, 
+    variables: { orderBy: 'CREATED_AT', orderDirection: 'DESC', searchKeyword: ''}, 
     
   })
   const getRepositories = (value) => {
@@ -26,10 +26,17 @@ const useRepositories = () => {
         orderDirection: 'DESC'
       },
     }
-    const filterObj = obj[value]
-    setFilter(value)
-    refetch({orderBy: filterObj.orderBy, orderDirection: filterObj.orderDirection}) 
-    
+    console.log(value)
+    if (typeof value === 'object' && 'searchKeyword' in value) {
+      refetch({searchKeyword: value.searchKeyword})
+    } else {
+      const filterObj = value ? obj[value] : obj.latest 
+
+      setFilter(value)
+      refetch({orderBy: filterObj.orderBy, orderDirection: filterObj.orderDirection}) 
+
+    }
+        
   }
   return { repositories: data?.repositories, loading, refetch: getRepositories, filter };
 };
