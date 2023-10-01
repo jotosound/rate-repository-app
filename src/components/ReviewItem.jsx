@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     flexShrink: 1, 
     flexDirection: 'row',
     padding: 10,
-    width: '100',
+    borderRadius: 15,
     backgroundColor: 'white'
   },
   rating: {
@@ -25,14 +25,17 @@ const styles = StyleSheet.create({
 
 const parseDate = (d) => {
   const newDate = new Date(d)
-  const options = {
-    month: 'numeric',
-    day: 'numeric',
-    year: 'numeric',
-  }
+  const dateString = `${newDate.getDate()}.${newDate.getMonth()}.${newDate.getFullYear()}`
+  return dateString
+  // const options = {
+  //   month: 'numeric',
+  //   day: 'numeric',
+  //   year: 'numeric',
+  // }
+  
   // default expo android js engine does not include Intl package
   // will error. external dependency needed :(
-  return newDate.toLocaleDateString(undefined, options).replaceAll('/', '.')
+  // return newDate.toLocaleDateString(undefined, options).replaceAll('/', '.')
   // return new Intl.DateTimeFormat(undefined, options).format(newDate).replaceAll('/', '.');
 }
 
@@ -46,7 +49,7 @@ const ReviewItem = ({ review }) => {
         <View style={{ paddingLeft: 15}}>
           <Text fontSize='subheading' fontWeight='bold'>{review.user.username}</Text>
           <Text fontSize='subheading'>{parseDate(review.createdAt)}</Text>
-          <View style={{ width: 400, flexGrow: 0, flex: 1}}>
+          <View style={{ flexGrow: 0, flex: 1}}>
             <Text >{review.text}</Text>
           </View>
         </View>
