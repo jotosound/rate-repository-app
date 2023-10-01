@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
 
 const parseDate = (d) => {
   const newDate = new Date(d)
-  const dateString = `${newDate.getDate()}.${newDate.getMonth()}.${newDate.getFullYear()}`
+  // js Date.getMonth/Day[OfWeek](tyepe: number) is zero based :(
+  const dateString = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`
   return dateString
   // const options = {
   //   month: 'numeric',
