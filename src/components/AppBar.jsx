@@ -42,6 +42,7 @@ const AppTab = () => {
           ) : (
           <>
             <AppTabAction to="/review">Create a Review</AppTabAction>
+            <AppTabAction to="/my-reviews">My Reviews</AppTabAction>
             <AppTabAction onPress={signOut}>Sign Out</AppTabAction>
           </>
         )}
