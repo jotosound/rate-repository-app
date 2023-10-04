@@ -29,15 +29,6 @@ const FilterSelect = ({ filter, refetch }) => {
   )
 }
 
-const RepositoryListHeader = ({ filter, refetch }) => {
-  return (
-    <View >
-      <Search refetch={refetch}/>
-      <FilterSelect filter={filter} refetch={refetch}/>
-    </View>
-  )
-}
-
 const ItemContainer = ({ item }) => {
   const navigate = useNavigate() 
   
@@ -52,7 +43,12 @@ class RepositoryListContainer extends React.Component {
   
   renderHeader = () => {
     const { filter, refetch } = this.props
-    return <RepositoryListHeader filter={filter} refetch={refetch}/>
+    return (
+      <View >
+        <Search refetch={refetch}/>
+        <FilterSelect filter={filter} refetch={refetch}/>
+      </View>
+    )
   }
   
   render() {
@@ -63,6 +59,8 @@ class RepositoryListContainer extends React.Component {
     
     return (
       <FlatList
+        onEndReached={this.props.onEndReached}
+        onEndReachedThreshold={1}
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         ListHeaderComponent={this.renderHeader}
@@ -75,15 +73,30 @@ class RepositoryListContainer extends React.Component {
 }
 
 const RepositoryList = () => {
-  const { repositories, loading, refetch, filter } = useRepositories() 
-  
+  const { repositories, loading, refetch, filter, fetchMore } = useRepositories({ 
+    first: Number(3), 
+    orderBy: 'CREATED_AT', 
+    orderDirection: 'DESC', 
+    searchKeyword: '',
+  }) 
+
+  const onEndReached = () => {
+    console.log('end')
+    fetchMore()
+  }
+
   if (loading) return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <ActivityIndicator size="large" />
     </View>
   )
   
-  return <RepositoryListContainer repositories={repositories} refetch={refetch} filter={filter} />
+  return <RepositoryListContainer 
+    repositories={repositories} 
+    refetch={refetch} 
+    filter={filter} 
+    onEndReached={onEndReached}
+  />
   
 };
 

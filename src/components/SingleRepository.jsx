@@ -8,8 +8,8 @@ import { ItemSeparator } from "./RepositoryList";
 const SingleRepository = () => {
   // ...
   const { id } = useParams()
-  const { data, loading } = useQuery(GET_REPOSITORY, { 
-    variables: { repositoryId: id ? id : ''},
+  const { data, loading, fetchMore } = useQuery(GET_REPOSITORY, { 
+    variables: { repositoryId: id ? id : '', first: 2},
     fetchPolicy: 'cache-and-network',
 
   })
@@ -21,15 +21,32 @@ const SingleRepository = () => {
       <ActivityIndicator size="large" />
     </View>
     )
+ const onEndReached = () => {
+    const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      console.log('no more')
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        repositoryId: id ? id : '',
+        after: data.repository.reviews.pageInfo.endCursor,
+        first: 2,
+      },
+    });
+  }
   
   return (
     <FlatList
       data={reviews}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => <RepositoryItem item={repository} />}
       ItemSeparatorComponent={ItemSeparator}
-      // ...
     />
   );
 };

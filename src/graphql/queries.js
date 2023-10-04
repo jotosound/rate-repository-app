@@ -28,7 +28,7 @@ export const ME = gql`
 `
 
 export const GET_REPOSITORY = gql`
-  query Repository($repositoryId: ID!) {
+  query Repository($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
       id
       description
@@ -39,7 +39,7 @@ export const GET_REPOSITORY = gql`
       reviewCount
       stargazersCount
       ownerAvatarUrl
-      reviews {
+      reviews(first: $first, after: $after) {
         edges {
           node {
             createdAt
@@ -51,6 +51,12 @@ export const GET_REPOSITORY = gql`
               username
             }
           }
+        cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
         }
       }
     }
@@ -58,8 +64,8 @@ export const GET_REPOSITORY = gql`
 `
 
 export const GET_REPOSITORIES = gql`
-  query Repositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String){
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword) {
+  query Repositories($first: Int, $after: String, $orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String){
+    repositories(first: $first, after: $after, orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword) {
       edges {
         node {
           id
@@ -72,6 +78,12 @@ export const GET_REPOSITORIES = gql`
           stargazersCount
           ownerAvatarUrl
         }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
       }
     }
   }
